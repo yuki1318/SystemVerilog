@@ -7,7 +7,7 @@ scope: source.systemverilog
 variables:
   id: '[A-Za-z_][A-Za-z_0-9]*'
   ID: '[A-Z_][A-Z0-9_]*\b'
-  keyword_base: '(always|always_ff|always_comb|always_latch|assign|initial|if|else|for|end|endcase|endmodule|endclass|endfunction|endtask|endclocking|iff|intersect|and|or|throughout|within|constraint|default|clocking|function|task|virtual|const|typedef|localparam|parameter|logic|int|generate)\b'
+  keyword_base: '(always|always_ff|always_comb|always_latch|assign|initial|if|else|inside|for|end|endcase|endmodule|endclass|endfunction|endtask|endclocking|iff|intersect|and|or|throughout|within|constraint|default|clocking|function|task|virtual|const|typedef|localparam|parameter|logic|int|generate)\b'
 contexts:
   main:
     - include: module-def
