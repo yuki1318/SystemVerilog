@@ -191,7 +191,7 @@ class VerilogAutoComplete(sublime_plugin.EventListener):
                 # print('[SV:completion] Function Snippet')
                 completion =  self.listbased_completion('uvm')
             # Provide completion for most always block
-            elif(prefix.startswith('a')):
+            elif(prefix.startswith('al')):
                 # print('[SV:completion] Always')
                 completion = self.always_completion()
             # Provide completion for endfunction, endtask, endclass, endmodule, endpackage, endinterface
