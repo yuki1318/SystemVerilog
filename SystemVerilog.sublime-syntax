@@ -406,6 +406,11 @@ contexts:
       captures:
         1: keyword.control.systemverilog
   comments:
+    # Take care of comments just before a function definition.
+    - match: /\* =(\s*.*?)\s*= \*/$\n?
+      scope: comment.block.c
+      captures:
+        1: meta.toc-list.banner.block.c
     - match: /\*
       captures:
         0: punctuation.definition.comment.systemverilog
