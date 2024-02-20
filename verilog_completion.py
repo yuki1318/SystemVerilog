@@ -1098,7 +1098,7 @@ class VerilogHelper():
                 a_l +=  ' : proc_$1'
         a_l +=  '\n'
         a_l += 'if (~'+rst_n_name + ') begin\n'
-        a_l += '$1 <= 0;'
+        a_l += '$1 <= \'0;'
         a_l += '\nend\nelse '
         if clk_en_name != '':
             a_l += 'if (' + clk_en_name + ') '
