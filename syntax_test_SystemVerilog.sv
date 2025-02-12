@@ -204,6 +204,21 @@ timeprecision 1fs;
 // <- keyword.control
 //            ^ constant.numeric.time
 
+always_comb begin : proc_delayed_assign
+    min10 <= #1 (AUTO_MIN-1)/10;
+//           ^ keyword.operator.delay.systemverilog
+//            ^ constant.numeric.decimal.systemverilog
+//               ^  constant.other.net.systemverilog
+    min1ns <= #1ns (AUTO_MIN-1)%10;
+//            ^ keyword.operator.delay.systemverilog
+//             ^^^ constant.numeric.time.systemverilog
+    basic <= #1 1'b1;
+//           ^ keyword.operator.delay.systemverilog
+//            ^ constant.numeric.decimal.systemverilog
+    cycle <= ##5 1'b0;
+//           ^^ keyword.operator.delay.systemverilog
+end
+
 sequence e3 ( sequence a, untyped b);
 //                        ^^^^^^^ storage.type.systemverilog
 @(posedge sysclk) a.triggered ##1 b;
@@ -652,7 +667,8 @@ join : f_label
 //     ^^^^^^^ entity.label
 
 
-always_ff @(posedge clk or negedge rst_n) begin : proc_
+always_ff @(posedge clk /*comment*/ or negedge rst_n) begin : proc_
+//                      ^^^^^^^^^^^ comment.block.systemverilog
     if (~rst_n)
         a <= '0;
 else if (en)
