@@ -19,16 +19,18 @@
 	"sv.tooltip_show_refs" : true, // True to show reference to module/interface/...
 	"sv.tooltip_show_signal_links" : false, // True to show links to driver/reference for signals
 	// SystemVerilog Alignment configuration
-	"sv.one_bind_per_line"     : true,  // When aligning module instantiation force only one binding per line
-	"sv.one_decl_per_line"     : false, // When aligning signal declaration force only one signal per line
-	"sv.max_line_length"       : 120,   // Use by alignment plugin to split one line into multiple if too long
-	"sv.strip_empty_line"      : true,  // Strip empty line inside Module declaration/alignement
-	"sv.mod_import_same_line"  : false, // When aligning module declaration, put import statement on same line as module
-	"sv.alignment_ignore_tick" : false, // Ignore line identation for every line starting with `ifdef,`elsif,...
-	"sv.align_comma_semicolon" : true,  // Align comma/semi-colon for signal/port declaration
-	"sv.align_paren"           : true,  // Align closing parenthesis for module instance
-	"sv.align_group_decl"      : false, // Group declaration separated by empty line or comments
-	"sv.param_port_alignment"  : true,  // Control if parameters/ports binding are align together
+	"sv.one_bind_per_line"       : true,  // When aligning module instantiation force only one binding per line
+	"sv.one_decl_per_line"       : false, // When aligning signal declaration force only one signal per line
+	"sv.max_line_length"         : 120,   // Use by alignment plugin to split one line into multiple if too long
+	"sv.strip_empty_line"        : true,  // Strip empty line inside Module declaration/alignment
+	"sv.mod_import_same_line"    : false, // When aligning module declaration, put import statement on same line as module
+	"sv.alignment_ignore_tick"   : false, // Ignore line indentation for every line starting with `ifdef,`elsif,...
+	"sv.align_comma_semicolon"   : true,  // Align comma/semi-colon for signal/port declaration
+	"sv.align_paren"             : true,  // Align closing parenthesis for module instance
+	"sv.align_group_decl"        : false, // Group declaration separated by empty line or comments
+	"sv.param_port_alignment"    : true,  // Control if parameters/ports binding are align together
+	"sv.align_space_bind"        : false, // Add space after a port binding in module instantiation
+	"sv.align_binding_completion": true,  // Align port and parameter bindings in module instantiation autocompletion
 	// SystemVerilog always block completion configuration
 	"sv.clk_name"           : "clk",    // Default clock name
 	"sv.rst_name"           : "rst",    // Default reset active high
@@ -42,6 +44,7 @@
 	"sv.clk_en_name"        : "clk_en", // Default clock enable name : empty string if you do not want a clock enable in the snippet
 	"sv.always_ce_auto"     : true,     // Detect if the clk_en signal is declared in the buffer: if not, do not use it in the always block
 	"sv.indent_style"       : "1tbs",   // Indentation style used by autocompletion and beautifier when force is enabled. Options are 1tbs or gnu
+	"sv.spaced_if"          : false,    // Add a space between if and ( in completion
 	"sv.end_label_comment"  : ["endcase"],  // List of end keyword which should use a comment style (end // label) instead of an identifier syle (end : label) on auto-completion
 	// SystemVerilog Module instantiation configuration
 	"sv.fillparam"               : true,  // On module instantiation with parameter user is asked a value for each parameter
@@ -60,6 +63,7 @@
 	"sv.decl_end"                : "/*----", // Pattern to find just after start to insert signal declaration before. Empty string to use first empty line after start pattern
 	"sv.decl_indent"             : 1, // Number of indentation level for signal declaration
 	"sv.proc_indent"             : 1, // Number of indentation level for process
+	"sv.args_indent"             : true, // Indent argument list of a task/function
 	// Popup config
 	"sv.hover_max_size" : -1, // Max size of the file (in byte) to display popup info. Set to -1 to disable the limit (default), 0 to disable feature.
 	// Navigation config
@@ -69,6 +73,7 @@
 	"sv.navbar_show_module_port"   : true, // Show all ports of current module
 	"sv.navbar_show_module_signal" : false, // Show all signal declared in a module
 	"sv.navbar_show_interface_cb"  : false, // Show all clocking block in an interface
+	"sv.search_incl"  : true, // When looking for a type name, search for include file in all the project folders
 	// Debug option
 	"sv.autocomplete_max_lvl": 5, // Max hierachy level for autocompletion (class.struct.field.sub-field == 4 level) , -1 for no limit
 	"sv.disable_autocomplete": false,

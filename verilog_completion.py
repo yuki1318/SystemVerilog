@@ -191,7 +191,7 @@ class VerilogAutoComplete(sublime_plugin.EventListener):
                 # print('[SV:completion] Function Snippet')
                 completion =  self.listbased_completion('uvm')
             # Provide completion for most always block
-            elif(prefix.startswith('al')):
+            elif(prefix.startswith('a')):
                 # print('[SV:completion] Always')
                 completion = self.always_completion()
             # Provide completion for endfunction, endtask, endclass, endmodule, endpackage, endinterface
@@ -594,7 +594,8 @@ class VerilogAutoComplete(sublime_plugin.EventListener):
     def listbased_completion(self, name):
         l = self.get_listbased_info(name)
         if not l:
-            print('[listbased_completion] No completion found for {}'.format(name))
+            if self.settings.get('sv.debug', False):
+                print('[listbased_completion] No completion found for {}'.format(name))
             return []
         k = sublime.KIND_SNIPPET if name in ['tick','core'] else MYKIND_FUNCTION
         c = []
@@ -806,7 +807,8 @@ class VerilogAutoComplete(sublime_plugin.EventListener):
         eot = verilogutil.clean_comment(txt_raw[pos:])
         has_binding = re.match(r'^\.\w*\b',eot) is not None
         if not has_binding:
-            is_last = re.match(r'(?s)^\.\w*\s*(?:\([^\)]+\))?\s*\)\s*(;|\w+)',eot,flags=re.MULTILINE) is not None
+            is_last = len(set([p['name'] for p in l]) - set(b)) <= 1 and \
+                re.match(r'(?s)^\.\w*\s*(?:\([^\)]+\))?\s*\)\s*(;|\w+)?',eot,flags=re.MULTILINE) is not None
         # print('End text = \n{0}\nHas_binding={1}, is_last={2}'.format(eot,has_binding,is_last))
         for x in l:
             if x['name'] not in b:
@@ -818,7 +820,9 @@ class VerilogAutoComplete(sublime_plugin.EventListener):
                     def_val = x['name']
                 s = x['name']
                 if not has_binding:
-                    s = s.ljust(len_port)+'(${0:' + def_val + '})'
+                    if self.settings.get("sv.align_binding_completion", True):
+                        s = s.ljust(len_port)
+                    s = s+'(${0:' + def_val + '})'
                     if not is_last:
                         s = s+','
                 c.append(sublime.CompletionItem(x['name'],tips,s,kind=MYKIND_FIELD, completion_format=1))
@@ -1039,6 +1043,7 @@ class VerilogHelper():
         always_begin_end  = settings.get('sv.always_ff_begin_end',True)
         always_one_cursor = settings.get('sv.always_one_cursor',True)
         indent_style      = settings.get('sv.indent_style','1tbs')
+        spaced_if         = settings.get('sv.spaced_if',False)
         beautifier = verilog_beautifier.VerilogBeautifier(useTab=True, indentSyle=indent_style)
         txt = ''
         # try to retrieve name of clk/reset base on buffer content (if enabled in settings)
@@ -1090,6 +1095,8 @@ class VerilogHelper():
             r = view.find(verilogutil.re_decl+clk_en_name,0)
             if not r :
                 clk_en_name = ''
+        #
+        if_sep = ' ' if spaced_if else ''
         # define basic always block with asynchronous reset
         a_l = 'always @(posedge '+clk_name+' or negedge ' + rst_n_name +')'
         if always_begin_end:
@@ -1097,11 +1104,11 @@ class VerilogHelper():
             if always_label :
                 a_l +=  ' : proc_$1'
         a_l +=  '\n'
-        a_l += 'if (~'+rst_n_name + ') begin\n'
-        a_l += '$1 <= \'0;'
-        a_l += '\nend\nelse '
+        a_l += f'if{if_sep}(~{rst_n_name}) begin\n'
+        a_l += '$1 <= 0;'
+        a_l += '\nend else '
         if clk_en_name != '':
-            a_l += 'if (' + clk_en_name + ') '
+            a_l += f'if{if_sep}({clk_en_name}) '
         a_l+= 'begin\n'
         if not always_one_cursor:
             a_l += '$1 <= $2;'
@@ -1116,7 +1123,7 @@ class VerilogHelper():
                 a_nr +=  ' : proc_$1'
         a_nr +=  '\n'
         if clk_en_name != '':
-            a_nr += 'if(' + clk_en_name + ') begin\n'
+            a_nr += f'if{if_sep}({clk_en_name}) begin'
         a_nr += '$1'
         if not always_one_cursor:
             a_nr += ' <= $2'
