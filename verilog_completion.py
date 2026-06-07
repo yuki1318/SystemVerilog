@@ -191,7 +191,7 @@ class VerilogAutoComplete(sublime_plugin.EventListener):
                 # print('[SV:completion] Function Snippet')
                 completion =  self.listbased_completion('uvm')
             # Provide completion for most always block
-            elif(prefix.startswith('a')):
+            elif(prefix.startswith('al')):
                 # print('[SV:completion] Always')
                 completion = self.always_completion()
             # Provide completion for endfunction, endtask, endclass, endmodule, endpackage, endinterface
@@ -1105,8 +1105,8 @@ class VerilogHelper():
                 a_l +=  ' : proc_$1'
         a_l +=  '\n'
         a_l += f'if{if_sep}(~{rst_n_name}) begin\n'
-        a_l += '$1 <= 0;'
-        a_l += '\nend else '
+        a_l += '$1 <= \'0;'
+        a_l += '\nend\nelse '
         if clk_en_name != '':
             a_l += f'if{if_sep}({clk_en_name}) '
         a_l+= 'begin\n'
@@ -1123,7 +1123,7 @@ class VerilogHelper():
                 a_nr +=  ' : proc_$1'
         a_nr +=  '\n'
         if clk_en_name != '':
-            a_nr += f'if{if_sep}({clk_en_name}) begin'
+            a_nr += f'if{if_sep}({clk_en_name}) begin\n'
         a_nr += '$1'
         if not always_one_cursor:
             a_nr += ' <= $2'
