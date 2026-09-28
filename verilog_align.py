@@ -1,5 +1,5 @@
 import sublime, sublime_plugin
-import re, string, os, sys, imp, time, threading
+import re, string, os, sys, importlib, time, threading
 
 from .verilogutil import verilogutil
 from .verilogutil import verilog_beautifier
@@ -15,9 +15,9 @@ def reload():
         try:
             time.sleep(1)
             from .verilogutil import verilogutil, verilog_beautifier, sublimeutil
-            imp.reload(verilogutil)
-            imp.reload(verilog_beautifier)
-            imp.reload(sublimeutil)
+            importlib.reload(verilogutil)
+            importlib.reload(verilog_beautifier)
+            importlib.reload(sublimeutil)
             # print('[SV] Align Loaded')
             cnt = 0
         except:

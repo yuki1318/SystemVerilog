@@ -1,9 +1,9 @@
 from __future__ import absolute_import
 
 import sublime, sublime_plugin
-import re, string, os, sys, functools, mmap, pprint, imp, time, threading
+import re, string, os, sys, functools, mmap, pprint, importlib, time, threading
 from collections import Counter
-from plistlib import readPlistFromBytes
+from plistlib import loads as readPlistFromBytes
 
 from . import verilog_module
 from .verilogutil import verilogutil
@@ -37,10 +37,10 @@ def reload():
             from . import verilog_module
             from .verilogutil import verilogutil, verilog_beautifier, sublimeutil
             from .color_scheme_util import st_color_scheme_matcher, rgba
-            imp.reload(verilogutil)
-            imp.reload(sublimeutil)
-            imp.reload(verilog_module)
-            imp.reload(st_color_scheme_matcher)
+            importlib.reload(verilogutil)
+            importlib.reload(sublimeutil)
+            importlib.reload(verilog_module)
+            importlib.reload(st_color_scheme_matcher)
             # print('[SV] Navigation Loaded')
             cnt = 0
         except:

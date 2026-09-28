@@ -1,5 +1,5 @@
 import sublime, sublime_plugin
-import re, string, os, sys, imp, time, threading
+import re, string, os, sys, importlib, time, threading
 import collections
 
 from . import verilog_module
@@ -20,10 +20,10 @@ def reload():
             time.sleep(1)
             from . import verilog_module
             from .verilogutil import verilogutil, verilog_beautifier, sublimeutil
-            imp.reload(verilogutil)
-            imp.reload(verilog_beautifier)
-            imp.reload(sublimeutil)
-            imp.reload(verilog_module)
+            importlib.reload(verilogutil)
+            importlib.reload(verilog_beautifier)
+            importlib.reload(sublimeutil)
+            importlib.reload(verilog_module)
             # print('[SV] Completion Loaded')
             cnt = 0
         except:

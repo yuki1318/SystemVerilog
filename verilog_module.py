@@ -1,5 +1,5 @@
 import sublime, sublime_plugin
-import re, string, os, sys, functools, mmap, imp, time, threading
+import re, string, os, sys, functools, mmap, importlib, time, threading
 import json
 from pathlib import Path
 
@@ -27,8 +27,8 @@ def reload():
         try:
             time.sleep(1)
             from .verilogutil import verilogutil, sublimeutil
-            imp.reload(verilogutil)
-            imp.reload(sublimeutil)
+            importlib.reload(verilogutil)
+            importlib.reload(sublimeutil)
             # print('[SV] Module Loaded')
             cnt = 0
         except:
